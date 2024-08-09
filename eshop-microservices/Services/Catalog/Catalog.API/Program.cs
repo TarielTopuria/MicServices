@@ -1,7 +1,3 @@
-using BuildingBlocks.Behaviors;
-using Npgsql.Internal;
-using System.Reflection;
-
 var builder = WebApplication.CreateBuilder(args);
 
 // Add Services to the container
@@ -23,10 +19,14 @@ builder.Services.AddMarten(opts =>
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);
 }).UseLightweightSessions();
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 // Configure the HTTP request Pipelines
 
 app.MapCarter();
+
+app.UseExceptionHandler(opt => { });
 
 app.Run();

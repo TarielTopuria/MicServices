@@ -8,74 +8,74 @@ namespace Catalog.API.Data
         {
             using var session = store.LightweightSession();
 
-            if(await session.Query<Product>().AnyAsync(token: cancellation))
+            if(await session.Query<Product>().AnyAsync())
             {
                 return;
             }
 
             session.Store<Product>(GetPreconfiguredProducts());
-            await session.SaveChangesAsync(cancellation);
+            await session.SaveChangesAsync();
         }
 
         private static IEnumerable<Product> GetPreconfiguredProducts()
         {
-            return
-            [
-                new()
+            return new List<Product>()
+            {
+                new Product()
                 {
-                    Id = new Guid("602d2149e773f2a3990b47fZ"),
+                    Id = Guid.NewGuid(),
                     Name = "IPhone X",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     ImageFile = "product-1.png",
                     Price = 950.00M,
-                    Category = ["Smart Phone"]
+                    Category = new List<string> {"Smart Phone"}
                 },
-                new()
+                new Product()
                 {
-                    Id = new Guid("602d2149e773f2a3990b47fX"),
+                    Id = Guid.NewGuid(),
                     Name = "Samsung 10",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     ImageFile = "product-2.png",
                     Price = 840.00M,
-                    Category = ["Smart Phone"]
+                    Category = new List<string> {"Smart Phone"}
                 },
-                new()
+                new Product()
                 {
-                    Id = new Guid("602d2149e773f2a3990b47fW"),
+                    Id = Guid.NewGuid(),
                     Name = "Huawei Plus",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     ImageFile = "product-3.png",
                     Price = 650.00M,
-                    Category =  ["White Appliances"]
+                    Category =  new List<string> { "White Appliances" }
                 },
-                new()
+                new Product()
                 {
-                    Id = new Guid("602d2149e773f2a3990b47fT"),
+                    Id = Guid.NewGuid(),
                     Name = "Xiaomi Mi 9",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     ImageFile = "product-4.png",
                     Price = 470.00M,
-                    Category = ["White Appliances"]
+                    Category = new List<string> { "White Appliances" }
                 },
-                new()
+                new Product()
                 {
-                    Id = new Guid("602d2149e773f2a3990b47fG"),
+                    Id = Guid.NewGuid(),
                     Name = "HTC U11+ Plus",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     ImageFile = "product-5.png",
                     Price = 380.00M,
-                    Category = ["Smart Phone"]
+                    Category = new List<string> {"Smart Phone"}
                 },
-                new()
+                new Product()
                 {
-                    Id = new Guid("602d2149e773f2a3990b47fL"),
+                    Id = Guid.NewGuid(),
                     Name = "LG G7 ThinQ",
                     Description = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ut, tenetur natus doloremque laborum quos iste ipsum rerum obcaecati impedit odit illo dolorum ab tempora nihil dicta earum fugiat. Temporibus, voluptatibus.",
                     ImageFile = "product-6.png",
                     Price = 240.00M,
-                    Category = ["Home Kitchen"]
+                    Category = new List<string> {"Home Kitchen"}
                 }
-            ];
+            };
         }
 
     }

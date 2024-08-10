@@ -17,7 +17,8 @@
 
         public async Task<bool> DeleteBasket(string userName, CancellationToken cancellationToken = default)
         {
-            session.Delete<ShoppingCart>(userName);
+            var existingBasket = await GetBasket(userName, cancellationToken) ?? throw new BasketNotFoundException(userName);
+            session.Delete<ShoppingCart>(existingBasket.UserName);
             await session.SaveChangesAsync(cancellationToken);
             return true;
         }

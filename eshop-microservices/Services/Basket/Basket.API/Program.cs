@@ -1,8 +1,13 @@
+using Discount.Grpc;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the containers
 
 var assembly = typeof(Program).Assembly;
+
+// Application Services
+builder.Services.AddCarter();
 
 builder.Services.AddMediatR(config =>
 {
@@ -11,14 +16,7 @@ builder.Services.AddMediatR(config =>
     config.AddOpenBehavior(typeof(LoggingBehavior<,>));
 });
 
-builder.Services.AddValidatorsFromAssembly(assembly);
-
-builder.Services.AddEndpointsApiExplorer();
-
-builder.Services.AddSwaggerGen();
-
-builder.Services.AddCarter();
-
+// Data Services
 builder.Services.AddMarten(opts =>
 {
     opts.Connection(builder.Configuration.GetConnectionString("Database")!);
@@ -33,6 +31,20 @@ builder.Services.AddStackExchangeRedisCache(opt =>
 {
     opt.Configuration = builder.Configuration.GetConnectionString("Redis");
 });
+
+// Grpc Services
+builder.Services.AddGrpcClient<DiscountProtoService.DiscountProtoServiceClient>(opts => 
+{
+    opts.Address = new Uri(builder.Configuration["GrpcSettings:DiscountUrl"]!);
+});
+
+// Cross-Cutting Services
+
+builder.Services.AddValidatorsFromAssembly(assembly);
+
+builder.Services.AddEndpointsApiExplorer();
+
+builder.Services.AddSwaggerGen();
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
